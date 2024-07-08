@@ -1,9 +1,8 @@
-import MainLayout from "./components/layout/MainLayout"
+import MainLayout from "./components/layout/MainLayout";
+import ProtectedRoute from "./pages/protectedRoute";
 
 const App = () => {
-  return (
-    <MainLayout></MainLayout>
-  )
-}
+  return <ProtectedRoute><MainLayout></MainLayout></ProtectedRoute>;
+};
 
-export default App
+export default App;

@@ -15,5 +15,3 @@ export const studentPaths: TUserPath[] = [
     index: true,
   },
 ];
-
-console.log(studentPaths);

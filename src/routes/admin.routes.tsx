@@ -2,13 +2,14 @@ import AdminDashboard from "../pages/admin/adminDashboard";
 import CreateStudent from "../pages/admin/createStudent";
 import CreateFaculty from "../pages/admin/createFaculty";
 import CreateAdmin from "../pages/admin/createAdmin";
+import ProtectedRoute from "../pages/protectedRoute";
 
 export const adminPaths = [
   {
     name: "Dashboard",
     index: true,
     path: "dashboard",
-    element: <AdminDashboard></AdminDashboard>,
+    element: <ProtectedRoute><AdminDashboard></AdminDashboard></ProtectedRoute>,
   },
   {
     name: "User Management",

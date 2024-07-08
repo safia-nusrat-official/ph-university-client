@@ -4,33 +4,39 @@ import { generateSideBarLinks } from "../../routes/routes.utils";
 import { TSidebarLink } from "../../types";
 import { facultyPaths } from "../../routes/faculty.routes";
 import { studentPaths } from "../../routes/student.routes";
+import { useAppSelector } from "../../redux/hooks";
+import { getUser } from "../../redux/features/auth/authSlice";
 const { Sider } = Layout;
 
 const SideBar = () => {
   let sideBarItems: TSidebarLink[] = [];
 
-  const role = {
+  const userRoles = {
     ADMIN: "admin",
+    SUPER_ADMIN: "superAdmin",
     FACULTY: "faculty",
     STUDENT: "student",
   };
 
-  const userRole = "faculty";
-
-  switch (userRole) {
-    case role.ADMIN:
+  const { role } = useAppSelector(getUser);
+  console.log(role)
+  switch (role) {
+    case userRoles.ADMIN:
       sideBarItems = generateSideBarLinks(adminPaths, "admin");
       break;
-    case role.FACULTY:
+    case userRoles.SUPER_ADMIN:
+      sideBarItems = generateSideBarLinks(adminPaths, "admin");
+      break;
+    case userRoles.FACULTY:
       sideBarItems = generateSideBarLinks(facultyPaths, "faculty");
       break;
-    case role.STUDENT:
+    case userRoles.STUDENT:
       sideBarItems = generateSideBarLinks(studentPaths, "student");
       break;
     default:
       break;
   }
-  console.log(sideBarItems)
+  console.log(sideBarItems);
   return (
     <Sider
       style={{
