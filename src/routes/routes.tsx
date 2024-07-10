@@ -17,6 +17,10 @@ const router = createBrowserRouter([
         children: generateRoutes(adminPaths),
       },
       {
+        path: "superAdmin",
+        children: generateRoutes(adminPaths),
+      },
+      {
         path: "student",
         children: generateRoutes(studentPaths),
       },

@@ -1,8 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
+import LogoutFromLS from "../../../utils/logoutFromLS";
 
+export type TUser = {
+  userId: string,
+  role: string,
+  iat: number,
+  exp: number
+}
 export interface IAuthState {
-  user: null | Record<string, unknown>;
+  user: null | TUser;
   token: null | string;
 }
 const initialState: IAuthState = {
@@ -14,20 +21,21 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser:(state, action:PayloadAction<IAuthState>)=>{
-        state.user = action.payload.user
-        state.token = action.payload.token
+    setUser: (state, action: PayloadAction<IAuthState>) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
-    logout: (state)=>{
-        state.user = null
-        state.token = null
-    }
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      LogoutFromLS()
+    },
   },
 });
 
-export const {setUser, logout} = authSlice.actions
+export const { setUser, logout } = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;
 
-export const getAccessToken = (state:RootState) => state.auth.token
-export const getUser = (state:RootState) => state.auth.user
+export const getAccessToken = (state: RootState) => state.auth.token;
+export const getUser = (state: RootState) => state.auth.user;
