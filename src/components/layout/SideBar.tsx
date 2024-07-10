@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUser, logout, TUser } from "../../redux/features/auth/authSlice";
 import { NavLink } from "react-router-dom";
 import { toast, Toaster } from "sonner";
+import ProfileCard from "../user/profileCard";
 const { Sider } = Layout;
 
 const SideBar = () => {
@@ -62,11 +63,12 @@ const SideBar = () => {
         className="demo-logo-vertical"
         style={{
           fontSize: "20px",
-          fontWeight: "semibold",
+          fontWeight: "bold",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           marginBottom: "1rem",
+          marginTop: "1rem",
         }}
       >
         <span className="logo">PH Univeristy</span>
@@ -78,9 +80,10 @@ const SideBar = () => {
         items={sideBarItems}
       />
       <div>
-        <Button onClick={handleLogout} className="font-semibold mt-6">Logout</Button>
+        <Button onClick={handleLogout} className="font-semibold text-2xl py-6 w-fit my-6 mx-4">Logout</Button>
       </div>
-      <Toaster></Toaster>
+      
+      <ProfileCard></ProfileCard>
     </Sider>
   );
 };

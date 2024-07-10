@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { Card, Col, Row } from "antd";
-import { getUser, setUser } from "../features/auth/authSlice";
+import { getUser, logout, setUser } from "../features/auth/authSlice";
 import { useAppSelector } from "../hooks";
 
 const baseQuery = fetchBaseQuery({
@@ -27,19 +27,23 @@ const customBaseQueryWithRefreshToken = async (
     const res = await fetch(`http://localhost:5000/api/v1/auth/refresh-token`, {
       method: "POST",
       credentials: "include",
-    });
+    })
+      .then((data) => data.json())
+      .then((data) => data);
 
-    const { data } = await res.json();
-    const user = (api.getState() as RootState).auth.user;
-
-    api.dispatch(
-      setUser({
-        user,
-        token: data.access_token,
-      })
-    );
-
-    result = await baseQuery(args, api, extraOptions)
+    const newAccessToken = await res?.data?.access_token;
+    if (newAccessToken) {    
+      const user = (api.getState() as RootState).auth.user;
+      api.dispatch(
+        setUser({
+          user,
+          token: newAccessToken,
+        })
+      );
+      result = await baseQuery(args, api, extraOptions);
+    }else{
+      api.dispatch(logout())
+    }
   }
   return result;
 };
