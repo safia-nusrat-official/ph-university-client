@@ -8,5 +8,5 @@ export type TRoute = {
 export type TSidebarLink = {
   key: string;
   label: ReactNode;
-  children?: TSidebarLink[];
+  children?: (TSidebarLink|undefined)[];
 };

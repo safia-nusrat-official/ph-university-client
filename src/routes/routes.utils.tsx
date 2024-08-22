@@ -43,16 +43,22 @@ export function generateSideBarLinks(
         label: <NavLink to={`/${role}/${item.path}`}>{item.name}</NavLink>,
       });
     }
-    if (item.children) {
+    if (item.children && item.name) {
       acc.push({
         key: item.name,
         label: (
           <NavLink to={`/${role}/${item.path ?? ""}`}>{item.name}</NavLink>
         ),
-        children: item.children.map((child) => ({
-          key: child.name,
-          label: <NavLink to={`/${role}/${child.path}`}>{child.name}</NavLink>,
-        })),
+        children: item.children.map((child) => {
+          if (child.name) {
+            return {
+              key: child.name,
+              label: (
+                <NavLink to={`/${role}/${child.path}`}>{child.name}</NavLink>
+              ),
+            };
+          }
+        }),
       });
     }
     return acc;

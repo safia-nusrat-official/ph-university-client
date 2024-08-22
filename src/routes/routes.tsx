@@ -5,7 +5,6 @@ import { studentPaths } from "./student.routes";
 import { generateRoutes } from "./routes.utils";
 import { facultyPaths } from "./faculty.routes";
 import Login from "../pages/auth/login";
-import Signup from "../pages/auth/signup";
 
 const router = createBrowserRouter([
   {
@@ -33,10 +32,6 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>,
-  },
-  {
-    path: "/signup",
-    element: <Signup></Signup>,
   },
 ]);
 

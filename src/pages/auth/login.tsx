@@ -7,27 +7,26 @@ import { setUser, TUser } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
 import { useNavigate } from "react-router-dom";
 import { toast, Toaster } from "sonner";
+import PHInput from "../../components/form/PHInput";
+import PHForm from "../../components/form/PHForm";
+import { Button } from "antd";
 
-const Login: React.FC = () => {
+const Login = () => {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm();
   const [errorMsg, setErrorMsg] = useState<null | string>(null);
-  const [login, { isSuccess, isLoading, isError }] = useLoginMutation();
+  const [login, { isLoading, isError }] = useLoginMutation();
   const navigate = useNavigate();
+
   const onSubmit = async (inputData: any) => {
-    console.log(isLoading)
     try {
-      if(isLoading){
-        toast.loading("Logging in", {})
-      };
+      if (isLoading) {
+        toast.loading("Logging in", {});
+      }
       setErrorMsg(null);
       const res = await login(inputData).unwrap();
 
-      console.log(res);
-
       if (!res.success || isError) {
         setErrorMsg(res.message || "Unexpected Error");
-        toast.error(errorMsg);
       }
       toast.success("Logged in successfully.");
 
@@ -44,55 +43,45 @@ const Login: React.FC = () => {
     } catch (err: any) {
       console.log(err);
       setErrorMsg(err?.data?.message || "Unexpected Error");
+      toast.error(err?.data?.message);
     }
   };
   return (
     <div className="mx-auto md:w-1/3 md:p-0 px-8 flex justify-center flex-col  h-screen ">
       <h1 className="text-4xl text-center mb-6 font-bold">Login</h1>
-      <form className="font-inter" onSubmit={handleSubmit(onSubmit)}>
-        <Toaster></Toaster>
-        <div className="relative w-full flex my-4">
-          <input
-            type="text"
-            required
-            placeholder="Enter your official Id"
-            className="p-[.75rem] w-full outline-none active:border-blue-500 rounded-md border-zinc-400 border-[1.58px] focus:border-blue-500"
-            {...register("userId", {})}
-          />
-          <label
-            htmlFor="id"
-            className="absolute -top-6 font-medium text-blue-500"
-          >
-            User Id
-          </label>
-        </div>
+      <PHForm onSubmit={onSubmit}>
+        <PHInput
+          errorMsg={errorMsg}
+          label="User Id"
+          placeholder="Enter your Official Id"
+          name="userId"
+          type="text"
+        ></PHInput>
+        <Toaster
+          position="bottom-right"
+          visibleToasts={2}
+          expand={false}
+          duration={2000}
+          closeButton={true}
+          richColors={true}
+        ></Toaster>
+        <PHInput
+          errorMsg={errorMsg}
+          label="Password"
+          placeholder="Enter your password"
+          name="password"
+          type="password"
+        ></PHInput>
 
-        {errorMsg && (
-          <span className="mb-4 font-medium text-red-600">{errorMsg}</span>
-        )}
-
-        <div className="relative w-full flex my-8">
-          <input
-            required
-            type="text"
-            placeholder="Enter your password"
-            className="p-[.75rem] w-full outline-none active:border-blue-500 rounded-md border-zinc-400 border-[1.58px] focus:border-blue-500"
-            {...register("password", {})}
-          />
-          <label
-            htmlFor="id"
-            className="absolute -top-6 font-medium text-blue-500"
-          >
-            Password
-          </label>
-        </div>
-        <button
-          type="submit"
-          className="py-[0.5rem] px-6 bg-blue-500 text-white rounded-md font-semibold "
+        <Button
+        htmlType="submit"
+          size="large"
+          type="primary"
+          className={`mt-6 font-semibold ${isLoading?"bg-slate-500":""}`}
         >
           Login
-        </button>
-      </form>
+        </Button>
+      </PHForm>
     </div>
   );
 };
