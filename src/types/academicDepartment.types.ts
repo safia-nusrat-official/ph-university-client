@@ -1,5 +1,7 @@
+import { TAcademicFaculty } from "./academicFaculty.types";
+
 export interface TAcademicDepartment {
   name: string;
-  academicFaculty: string;
+  academicFaculty: TAcademicFaculty;
   _id?: string;
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useGetAllSemestersQuery } from "../../../../redux/features/adminFeatures/academicSemester/academicSemester";
+import { useGetAllSemestersQuery } from "../../../../redux/features/adminFeatures/academicManagement/academicSemester";
 import { TAcademicSemester } from "../../../../types/academicSemester.types";
 import { Pagination, Table, TableColumnsType, TableProps } from "antd";
 import {
@@ -13,23 +13,25 @@ const AcademicSemester = () => {
   const [params, setParams] = useState([{ name: "limit", value: "10" }]);
   const { data, isFetching } = useGetAllSemestersQuery(params);
   console.log(data);
-  const semesterData = data?.data && data.data.map(
-    ({
-      name,
-      year,
-      code,
-      startMonth,
-      endMonth,
-      _id,
-    }: TAcademicSemester & { _id: string }) => ({
-      key: _id,
-      name,
-      year,
-      code,
-      startMonth,
-      endMonth,
-    })
-  );
+  const semesterData =
+    data?.data &&
+    data.data.map(
+      ({
+        name,
+        year,
+        code,
+        startMonth,
+        endMonth,
+        _id,
+      }: TAcademicSemester & { _id: string }) => ({
+        key: _id,
+        name,
+        year,
+        code,
+        startMonth,
+        endMonth,
+      })
+    );
   console.log(semesterData);
 
   const columns: TableColumnsType<TAcademicSemester> = [

@@ -41,7 +41,10 @@ const SideBar = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100%",
+        height: "100vh",
+        position:"sticky",
+        top:0,
+        overflowY:"auto",
       }}
       width={275}
       breakpoint="lg"

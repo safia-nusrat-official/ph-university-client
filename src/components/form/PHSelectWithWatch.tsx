@@ -1,5 +1,5 @@
 import { Form, Select } from "antd";
-import { Controller } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { SelectProps } from "../../types/PHSelect.types";
 
 const PHSelect = ({
@@ -9,21 +9,15 @@ const PHSelect = ({
   placeholder,
   disabled,
   defaultValue,
-  required,
 }: SelectProps) => {
+  const { control } = useFormContext();
+
   return (
     <Controller
       name={name}
       defaultValue={defaultValue}
-      rules={{
-        required: required && `${label} is required.`,
-      }}
-      render={({ field, fieldState }) => (
-        <Form.Item
-          label={label}
-          validateStatus={fieldState.error ? "error" : ""}
-          help={fieldState.error ? fieldState.error.message : ""}
-        >
+      render={({ field }) => (
+        <Form.Item label={label}>
           <Select
             {...field}
             disabled={disabled}

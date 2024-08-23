@@ -18,7 +18,7 @@ const MainLayout = () => {
     <Layout
       style={{
         color: "#fff",
-        height: "100vh",
+        height: "100%",
       }}
     >
       <SideBar></SideBar>

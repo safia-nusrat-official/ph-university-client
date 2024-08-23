@@ -1,13 +1,14 @@
 import { Button, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
-import { useGetAllAcademicFacultiesQuery } from "../../../../redux/features/adminFeatures/academicFaculty/academicFaculty";
+import { useGetAllAcademicFacultiesQuery } from "../../../../redux/features/adminFeatures/academicManagement/academicFaculty";
 import { QueryParam } from "../../../../types/global.types";
 import { TAcademicFaculty } from "../../../../types/academicFaculty.types";
 import CreateAcademicFaculty from "./createAcademicFaculty";
 
 const AcademicFaculty = () => {
   const [params, setParams] = useState([{ name: "limit", value: "10" }]);
-  const { data, isLoading, isFetching } = useGetAllAcademicFacultiesQuery(params);
+  const { data, isLoading, isFetching } =
+    useGetAllAcademicFacultiesQuery(params);
   const academicFacultyData = (!isLoading && data?.data) || [];
 
   const columns: TableColumnsType<TAcademicFaculty> = [

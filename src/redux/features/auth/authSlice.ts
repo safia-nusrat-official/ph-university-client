@@ -3,11 +3,11 @@ import { RootState } from "../../store";
 import LogoutFromLS from "../../../utils/logoutFromLS";
 
 export type TUser = {
-  userId: string,
-  role: string,
-  iat: number,
-  exp: number
-}
+  userId: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
 export interface IAuthState {
   user: null | TUser;
   token: null | string;
@@ -28,7 +28,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
-      LogoutFromLS()
+      LogoutFromLS();
     },
   },
 });

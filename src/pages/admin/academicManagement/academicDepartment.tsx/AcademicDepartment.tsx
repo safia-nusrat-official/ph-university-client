@@ -1,18 +1,28 @@
-import { Button, Table, TableColumnsType, TableProps } from "antd";
+import { Button, Pagination, Table, TableColumnsType, TableProps } from "antd";
 import { useState } from "react";
 import { QueryParam } from "../../../../types/global.types";
 import { TAcademicDepartment } from "../../../../types/academicDepartment.types";
 import CreateAcademicDepartment from "./createAcademicDepartment";
-import { useGetAllDepartmentsQuery } from "../../../../redux/features/adminFeatures/academicDepartment/academicDepartment";
+import { useGetAllDepartmentsQuery } from "../../../../redux/features/adminFeatures/academicManagement/academicDepartment";
 
 const AcademicDepartment = () => {
-  const [params, setParams] = useState([{ name: "limit", value: "10" }]);
-  const { data, isLoading, isFetching } = useGetAllDepartmentsQuery(params);
-  console.log(data)
-  const academicDepartmentData = data?.data && data?.data.map(department=>({
-    
-  }));
-  console.log(academicDepartmentData)
+  const [page, setPage] = useState(1);
+  const [params, setParams] = useState([]);
+  const { data, isLoading, isFetching } = useGetAllDepartmentsQuery([
+    { name: "limit", value: "5" },
+    { name: "page", value: `${page}` },
+    ...params,
+  ]);
+  console.log(data);
+  const academicDepartmentData =
+    data?.data &&
+    data?.data.map((department: TAcademicDepartment) => ({
+      key: department._id,
+      name: department.name,
+      academicFaculty: department.academicFaculty.name,
+    }));
+
+  console.log(academicDepartmentData);
 
   const columns: TableColumnsType<TAcademicDepartment> = [
     {
@@ -23,7 +33,7 @@ const AcademicDepartment = () => {
     },
     {
       title: "Academic Faculty Name",
-      dataIndex: "academicFaculty.name",
+      dataIndex: "academicFaculty",
       sorter: (a, b) => a.name.length - b.name.length,
       sortDirections: ["descend"],
     },
@@ -55,13 +65,20 @@ const AcademicDepartment = () => {
         <CreateAcademicDepartment></CreateAcademicDepartment>
       </div>
       <Table
-        loading={isFetching}
+        loading={isLoading}
         columns={columns}
         dataSource={academicDepartmentData}
-        pagination={{ pageSize: 5 }}
+        pagination={false}
         onChange={onChange}
         showSorterTooltip={{ target: "sorter-icon" }}
       />
+      <Pagination
+        className="mt-6"
+        current={page}
+        onChange={(value) => setPage(value)}
+        total={data?.meta?.totalData}
+        pageSize={data?.meta?.limit}
+      ></Pagination>
     </div>
   );
 };

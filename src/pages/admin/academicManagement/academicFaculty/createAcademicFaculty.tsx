@@ -1,5 +1,5 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { useCreateAcademicFacultyMutation } from "../../../../redux/features/adminFeatures/academicFaculty/academicFaculty";
+import { useCreateAcademicFacultyMutation } from "../../../../redux/features/adminFeatures/academicManagement/academicFaculty";
 import { TAcademicFaculty } from "../../../../types/academicFaculty.types";
 import { TReduxResponse } from "../../../../types/global.types";
 import { toast } from "sonner";
@@ -30,7 +30,6 @@ const CreateAcademicFaculty = () => {
       } else if (result?.success) {
         toast.success(result.message);
         setIsModalOpen(false);
-
       }
     } catch (err) {
       toast.error("Something went wrong!");

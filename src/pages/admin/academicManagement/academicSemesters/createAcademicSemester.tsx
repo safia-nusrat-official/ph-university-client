@@ -9,7 +9,7 @@ import {
   TAcademicSemester,
   TSemesterNames,
 } from "../../../../types/academicSemester.types";
-import { useCreateAcademicSemesterMutation } from "../../../../redux/features/adminFeatures/academicSemester/academicSemester";
+import { useCreateAcademicSemesterMutation } from "../../../../redux/features/adminFeatures/academicManagement/academicSemester";
 import { toast } from "sonner";
 import { TReduxResponse } from "../../../../types/global.types";
 
@@ -41,7 +41,7 @@ const CreateAcademicSemester: React.FC = () => {
     useCreateAcademicSemesterMutation();
 
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data)
+    console.log(data);
     const semester: TAcademicSemester = {
       name: nameOptions[Number(data.name) - 1].label as TSemesterNames,
       code: data.name,
@@ -51,13 +51,15 @@ const CreateAcademicSemester: React.FC = () => {
     };
     console.log(semester);
     try {
-      const result = await createAcademicSemester(semester) as TReduxResponse<TAcademicSemester>;
+      const result = (await createAcademicSemester(
+        semester
+      )) as TReduxResponse<TAcademicSemester>;
       console.log(result);
 
       if (result.error) {
         console.log(result.error.data.message);
         toast.error(result.error.data.message);
-      }else if(result.success){
+      } else if (result.success) {
         toast.success(result.message);
       }
     } catch (err) {
@@ -91,7 +93,7 @@ const CreateAcademicSemester: React.FC = () => {
             options={monthOptions}
           ></PHSelect>
           <Button
-          loading={isLoading}
+            loading={isLoading}
             htmlType="submit"
             className="mt-6 font-semibold"
             type="primary"

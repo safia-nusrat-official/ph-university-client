@@ -59,15 +59,29 @@ export const baseApi = createApi({
   tagTypes: [
     "academicSemesters",
     "academicSemester",
+
     "academicDepartments",
     "academicDepartment",
+
     "academicFaculties",
     "academicFaculty",
+
     "students",
+    "student",
+
     "admins",
+    "admin",
+
     "users",
+    "user",
+
+    "faculty",
     "faculties",
+
     "offeredCourses",
-    "enrolledCourses"
+    "offeredCourse",
+    
+    "enrolledCourses",
+    "enrolledCourse"
   ],
 });

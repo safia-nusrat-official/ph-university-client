@@ -1,7 +1,6 @@
 import { TAcademicFaculty } from "../../../../types/academicFaculty.types";
-import { QueryParam } from "../../../../types/global.types";
+import { QueryParam, TReduxResponse } from "../../../../types/global.types";
 import { baseApi } from "../../../api/baseApi";
-
 
 const academicFacultyApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -19,15 +18,18 @@ const academicFacultyApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (res) => {
-        return { data: res.data };
+      transformResponse: (res: TReduxResponse<TAcademicFaculty[]>) => {
+        return { data: res.data, meta: res.meta };
       },
       providesTags: ["academicFaculties"],
     }),
 
     getAcademicFaculty: builder.query({
-      query: (id: string) => ({ url: `/academic-faculties/${id}`, method: "GET" }),
-      transformResponse: (res) => {
+      query: (id: string) => ({
+        url: `/academic-faculties/${id}`,
+        method: "GET",
+      }),
+      transformResponse: (res: TReduxResponse<TAcademicFaculty>) => {
         return { data: res.data };
       },
       providesTags: ["academicFaculty"],
@@ -47,5 +49,5 @@ const academicFacultyApi = baseApi.injectEndpoints({
 export const {
   useGetAcademicFacultyQuery,
   useCreateAcademicFacultyMutation,
-  useGetAllAcademicFacultiesQuery
+  useGetAllAcademicFacultiesQuery,
 } = academicFacultyApi;

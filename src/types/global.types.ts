@@ -22,7 +22,7 @@ export interface TMeta {
 };
 
 export interface TResponse<T> {
-  data?: T;
+  data?: TSuccessResponse<T>;
   error?: TErrorResponse;
   meta?:TMeta
   success: boolean;

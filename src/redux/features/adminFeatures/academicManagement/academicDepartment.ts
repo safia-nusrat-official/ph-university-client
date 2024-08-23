@@ -18,8 +18,8 @@ const academicDepartmentApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (res:TReduxResponse<TAcademicDepartment[]>) => {
-        return { data: res.data, meta:res.meta };
+      transformResponse: (res: TReduxResponse<TAcademicDepartment[]>) => {
+        return { data: res.data, meta: res.meta };
       },
       providesTags: ["academicDepartments"],
     }),
@@ -29,7 +29,7 @@ const academicDepartmentApi = baseApi.injectEndpoints({
         url: `/academic-departments/${id}`,
         method: "GET",
       }),
-      transformResponse: (res:TReduxResponse<TAcademicDepartment>) => {
+      transformResponse: (res: TReduxResponse<TAcademicDepartment>) => {
         return { data: res.data };
       },
       providesTags: ["academicDepartment"],

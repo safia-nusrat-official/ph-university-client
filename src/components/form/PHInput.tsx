@@ -9,33 +9,42 @@ const PHInput = ({
   name,
   label,
   errorMsg,
+  defaultValue,
+  required = true,
 }: {
+  defaultValue?: string;
   placeholder: string;
   label: string;
   name: string;
   errorMsg: null | string;
   type: string;
+  required?: boolean;
 }) => {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   return (
     <div className="mt-4">
       <Controller
+        defaultValue={defaultValue}
         name={name}
-        render={({ field }) => {
+        rules={{
+          required: required && (errorMsg || `${label} is required`),
+        }}
+        render={({ field, fieldState }) => {
           return (
-            <Form.Item label={label}>
+            <Form.Item
+              label={label}
+              validateStatus={fieldState.error ? "error" : ""}
+              help={fieldState.error ? fieldState.error.message : ""}
+            >
               {type === "text" ? (
                 <Input
                   {...field}
                   placeholder={placeholder}
                   size="large"
-                  required
                   id={name}
                 />
               ) : (
                 <Input.Password
                   {...field}
-                  required
                   size="large"
                   placeholder={placeholder}
                   id={name}

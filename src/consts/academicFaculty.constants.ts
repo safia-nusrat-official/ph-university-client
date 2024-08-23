@@ -20,4 +20,3 @@ export const academicFacultyOptions: SelectOptions = academicFaculties.map(
   (item) => ({ label: item, value: item })
 );
 
-console.log(academicFacultyOptions)
